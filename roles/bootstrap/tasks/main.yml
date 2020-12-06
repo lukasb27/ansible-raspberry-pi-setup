@@ -1,0 +1,15 @@
+- name: Check for Python
+  raw: test -e /usr/bin/python2.7
+  changed_when: false
+  failed_when: false
+  register: check_python
+
+- name: Update apt
+  raw: apt -y update
+  become: true
+  when: check_python.rc != 0
+
+- name: Install Python
+  raw: sudo apt install -y python2
+  become: true
+  when: check_python.rc != 0

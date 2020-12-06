@@ -1,0 +1,17 @@
+- name: apply bootstrap configuration to all nodes
+  hosts: all
+  remote_user: ubuntu
+  gather_facts: false
+  roles:
+    - bootstrap
+
+- name: apply common configuration to all nodes
+  hosts: pis
+  remote_user: ubuntu
+  become: true
+  vars_files:
+    - group_vars/secret_variables.yml
+  roles:
+    - common
+
+
